@@ -126,10 +126,10 @@ public function svahalloffame_func($atts){
 		'per-page' => '50',
 	), $atts );
 
-	$categories = $wpdb->get_results("SELECT DISTINCT category FROM wp_svahalloffame WHERE year = {$attributes['year']}");
+	$categories = $wpdb->get_results("SELECT DISTINCT category FROM {$wpdb->prefix}svahalloffame WHERE year = {$attributes['year']}");
 
 	foreach ( $categories as $category ) {
-		$winners_in_category = $wpdb->get_results("SELECT * FROM wp_svahalloffame WHERE category = '{$category->category}' AND year = {$attributes['year']} ORDER BY ranking ASC");
+		$winners_in_category = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}svahalloffame WHERE category = '{$category->category}' AND year = {$attributes['year']} ORDER BY ranking ASC");
 		$winners_html = "";
 
 		foreach ( $winners_in_category as $winner ) {
