@@ -101,6 +101,13 @@ class Sva_Hall_Of_Fame_Public {
 	}
 
 	public function svahalloffame_add_shortcode() {
+
+		//wp_register_style( 'bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css' );
+		//wp_enqueue_style('bootstrap-css');
+
+		//wp_register_script( 'bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js');
+		//wp_enqueue_script('bootstrap-js');
+
 		add_shortcode(
 			'svahalloffame',
 			array( $this, 'svahalloffame_func' )
@@ -108,6 +115,7 @@ class Sva_Hall_Of_Fame_Public {
 }
 
 public function svahalloffame_func($atts){
+
 	global $wpdb;
 	//$menus = get_terms( 'nav_menu' );
 	$html_block = "";
@@ -118,19 +126,46 @@ public function svahalloffame_func($atts){
 		'per-page' => '50',
 	), $atts );
 
-	$items = $wpdb->get_results("SELECT * FROM wp_svahalloffame WHERE year = {$attributes['year']}");
-	//print_r($items);
+	$categories = $wpdb->get_results("SELECT DISTINCT category FROM wp_svahalloffame WHERE year = {$attributes['year']}");
 
-	foreach ( $items as $item ) {
-$item_html = <<<HTML
-<p>
-	{$item->text} - {$item->year}
-</p>
-HTML;
-		$html_block = $html_block . $item_html;
+	foreach ( $categories as $category ) {
+		$winners_in_category = $wpdb->get_results("SELECT * FROM wp_svahalloffame WHERE category = '{$category->category}' AND year = {$attributes['year']} ORDER BY ranking ASC");
+		$winners_html = "";
+
+		foreach ( $winners_in_category as $winner ) {
+			$winners_html = $winners_html . "<h3>" . $winner->ranking . ". " . $winner->winner . "</h3>";
+
+		}
+
+		//$html_block = $html_block . $winners_html;
+
+
+		$card = <<<HTML
+
+			<div class="card h-100 mb-4">
+				<div class="card-body">
+					<h3 class="card-title">{$category->category}</h3>
+					<hr>
+					{$winners_html}
+				</div>
+			</div>
+
+		HTML;
+
+		$html_block = $html_block . $card;
+
 	}
 
-	return $html_block;
+	$final_html_block = <<<HTML
+	<div class="container">
+		<h2>Swiss Vegan Awards {$winners_in_category[0]->year}</h2>
+		<div class="mb-4">
+			{$html_block}
+		</div>
+	</div>
+HTML;
+
+	return $final_html_block;
 }
 
 }
