@@ -1,5 +1,8 @@
 <?php
 
+global $jal_db_version;
+$jal_db_version = '1.0';
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -99,5 +102,6 @@ class Sva_Hall_Of_Fame_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/sva-hall-of-fame-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+
 
 }
