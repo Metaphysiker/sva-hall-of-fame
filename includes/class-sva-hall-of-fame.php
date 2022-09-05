@@ -156,9 +156,6 @@ class Sva_Hall_Of_Fame {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'register_activation_hook', $plugin_admin, 'jal_install' );
-		$this->loader->add_action( 'register_activation_hook', $plugin_admin, 'jal_install_data' );
-
 
 	}
 
@@ -175,6 +172,7 @@ class Sva_Hall_Of_Fame {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'init', $plugin_public, 'svahalloffame_add_shortcode' );
 
 	}
 

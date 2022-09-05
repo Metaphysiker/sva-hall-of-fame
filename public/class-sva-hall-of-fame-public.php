@@ -100,4 +100,36 @@ class Sva_Hall_Of_Fame_Public {
 
 	}
 
+	public function svahalloffame_add_shortcode() {
+		add_shortcode(
+			'svahalloffame',
+			array( $this, 'svahalloffame_func' )
+		);
+}
+
+public function svahalloffame_func($atts){
+	global $wpdb;
+	//$menus = get_terms( 'nav_menu' );
+	$html_block = "";
+	//$accordion_items = "";
+	$attributes = shortcode_atts( array(
+		'sub_menu_id' => 0,
+		'per-page' => '50',
+	), $atts );
+
+	$items = $wpdb->get_results("SELECT * FROM wp_svahalloffame");
+	print_r($items);
+
+	foreach ( $items as $item ) {
+$item_html = <<<HTML
+<p>
+	{$item->text} - {$item->year}
+</p>
+HTML;
+		$html_block = $html_block . $item_html;
+	}
+
+	return $html_block;
+}
+
 }
