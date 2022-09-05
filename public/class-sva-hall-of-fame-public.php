@@ -113,12 +113,13 @@ public function svahalloffame_func($atts){
 	$html_block = "";
 	//$accordion_items = "";
 	$attributes = shortcode_atts( array(
+		'year' => 2022,
 		'sub_menu_id' => 0,
 		'per-page' => '50',
 	), $atts );
 
-	$items = $wpdb->get_results("SELECT * FROM wp_svahalloffame");
-	print_r($items);
+	$items = $wpdb->get_results("SELECT * FROM wp_svahalloffame WHERE year = {$attributes['year']}");
+	//print_r($items);
 
 	foreach ( $items as $item ) {
 $item_html = <<<HTML
