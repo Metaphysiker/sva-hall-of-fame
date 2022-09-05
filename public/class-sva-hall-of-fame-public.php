@@ -34,7 +34,7 @@ class Sva_Hall_Of_Fame_Public {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.0.1
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -144,8 +144,8 @@ public function svahalloffame_func($atts){
 
 			<div class="card h-100 mb-4">
 				<div class="card-body">
-					<h3 class="card-title">{$category->category}</h3>
-					<hr>
+					<h3 class="card-title mb-2">{$category->category}</h3>
+
 					{$winners_html}
 				</div>
 			</div>
