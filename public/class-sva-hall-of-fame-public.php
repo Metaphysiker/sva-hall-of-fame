@@ -133,7 +133,27 @@ public function svahalloffame_func($atts){
 		$winners_html = "";
 
 		foreach ( $winners_in_category as $winner ) {
-			$winners_html = $winners_html . "<h3>" . $winner->ranking . ". " . $winner->winner . "</h3>";
+			//$winners_html = $winners_html . "<h3>" . $winner->ranking . ". " . $winner->winner . "</h3>";
+
+			if (empty($winner->url)) {
+
+				$winner_link = <<<HTML
+				<h3 class="mb-3">
+					{$winner->ranking}.	{$winner->winner}
+				</h3>
+				HTML;
+				$winners_html = $winners_html . $winner_link;
+
+			} else {
+
+				$winner_link = <<<HTML
+				<h3 class="mb-3">
+					{$winner->ranking}.	<a href="{$winner->url}">{$winner->winner}</a>
+				</h3>
+				HTML;
+				$winners_html = $winners_html . $winner_link;
+
+			}
 
 		}
 
@@ -144,7 +164,7 @@ public function svahalloffame_func($atts){
 
 			<div class="card h-100 mb-4">
 				<div class="card-body">
-					<h3 class="card-title mb-2">{$category->category}</h3>
+					<h3 class="card-title mb-4">{$category->category}</h3>
 
 					{$winners_html}
 				</div>

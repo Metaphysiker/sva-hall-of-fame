@@ -39,6 +39,7 @@ class Sva_Hall_Of_Fame_Activator {
 			year mediumint NOT NULL,
 			category tinytext DEFAULT '' NOT NULL,
 			winner mediumtext DEFAULT '' NOT NULL,
+			url varchar(512) DEFAULT '' NOT NULL,
 			ranking mediumint(9) NOT NULL,
 			PRIMARY KEY  (id)
 		) $charset_collate;";
